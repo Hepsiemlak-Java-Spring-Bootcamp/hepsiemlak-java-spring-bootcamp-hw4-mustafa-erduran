@@ -24,7 +24,7 @@ public class AdvertService {
 	private UserService userService;
 	
 	private static int advertNo = 38164784;
-	
+	private int counter = 0;
 	@Autowired
 	private BannerClient bannerClient;
 	
@@ -51,6 +51,14 @@ public class AdvertService {
 		return advertList;
 	}
 
+	public void deleteAllAdverts(){
+		advertRepository.deleteAll();
+	}
+
+	public void deleteAdvertById(Integer userId){
+		advertRepository.deleteById(userId);
+	}
+
 
 	/*public UUID setFavoriteAdvert(UUID userId){
 		return advertRepository.setFavoriteAdvert(userId);
@@ -70,7 +78,7 @@ public class AdvertService {
 		Advert savedAdvert = advertRepository.save(convertToAdvert(request,foundUser));
 		//EmailMessage emailMessage = new EmailMessage("cemdrman@gmail.com");
 		//queueService.sendMessage(emailMessage);
-		bannerClient.saveBanner();
+		//bannerClient.saveBanner();
 		return convertToAdvertResponse(savedAdvert);
 	}
 
@@ -79,7 +87,7 @@ public class AdvertService {
 		response.setBaslik(savedAdvert.getBaslik());
 		response.setFiyat(savedAdvert.getFiyat());
 		response.setAdvertNo(savedAdvert.getAdvertNo());
-		response.setUser(savedAdvert.getCreatorUser());
+		//response.setUser(savedAdvert.getCreatorUser());
 		return response;
 	}
 
@@ -89,6 +97,7 @@ public class AdvertService {
 
 		if (foundUser.isPresent()) {
 			advert = new Advert();
+			advert.setId(counter);
 			advert.setCreatorUser(foundUser.get());
 			advertNo++;
 
@@ -98,7 +107,7 @@ public class AdvertService {
 		} else {
 			//log.info("Kullanıcı Bulunamadı!");
 		}
-
+		counter++;
 		return advert;
 	}
 

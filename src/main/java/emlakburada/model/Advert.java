@@ -12,11 +12,11 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(name = "Adverts1")
 public class Advert {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
-
 
 	private int advertNo;
 	//private RealEstate gayrimenkul;
@@ -33,7 +33,6 @@ public class Advert {
 
 	public Advert(RealEstate gayrimenkul, User kullanici, String[] resimList) {
 
-		this.creatorUser = kullanici;
 		this.resimList = resimList;
 	}
 

@@ -7,11 +7,7 @@ import emlakburada.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import emlakburada.dto.request.AdvertRequest;
 import emlakburada.dto.response.AdvertResponse;
@@ -39,6 +35,20 @@ public class AdvertController {
 	public ResponseEntity<AdvertResponse> getAdvertByAdvertId(@PathVariable(required = false) int advertNo) {
 		return new ResponseEntity<>(advertService.getAdvertByAdvertId(advertNo), HttpStatus.OK);
 	}
+
+	@DeleteMapping(value = "/adverts")
+	public ResponseEntity<HttpStatus> deleteAllUsers(){
+		advertService.deleteAllAdverts();
+		return new ResponseEntity<>(HttpStatus.ACCEPTED);
+	}
+
+	@DeleteMapping(value = "/adverts/{id}")
+	public ResponseEntity<HttpStatus> deleteUserById(@PathVariable Integer id){
+		advertService.deleteAdvertById(id);
+		return new ResponseEntity<>(HttpStatus.ACCEPTED);
+	}
+
+
 
 	/*@PostMapping(value = "/adverts/{userId}" )
 	public ResponseEntity<UUID> setFavoriteAdvert(@PathVariable UUID userId){
